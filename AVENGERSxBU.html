@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Avengers: Code Assemble | GeeksForGeeks Student Chapter, Bennett University</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07080d;--panel:#10121b;--ink:#f3efe6;--mute:#9a9cab;--red:#ed1d24;--gold:#f5c518;--acc:#ed1d24;--line:rgba(255,255,255,.12);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Barlow,system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3{font-family:Anton,Impact,sans-serif;font-weight:400;margin:0;line-height:.95;letter-spacing:.01em;text-transform:uppercase}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+section{padding:96px 0;position:relative}
+h2{font-size:clamp(40px,7vw,76px);margin-bottom:14px}
+.lead{color:var(--mute);max-width:56ch;margin:0 0 44px}
+.btn{display:inline-block;background:var(--acc);color:#fff;font:600 17px Barlow,sans-serif;padding:16px 34px;border:0;cursor:pointer;text-decoration:none;clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);transition:transform .2s,background .3s}
+.btn:hover{transform:translateX(6px)}
+.btn.ghost{background:transparent;box-shadow:inset 0 0 0 2px var(--line);clip-path:none}
+nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px 22px;background:linear-gradient(#07080dee,#07080d00)}
+nav b{font:400 22px Anton,sans-serif;letter-spacing:.05em}
+nav b i{font-style:normal;color:var(--red)}
+nav a.btn{padding:9px 20px;font-size:15px}
+
+/* hero */
+#hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:110px 0 70px;background:radial-gradient(ellipse at 70% 30%,#2a0a0e 0,transparent 60%),var(--bg)}
+#fx{position:absolute;inset:0;width:100%;height:100%}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(237,29,36,.35) 1.4px,transparent 1.6px);background-size:14px 14px;-webkit-mask-image:linear-gradient(115deg,transparent 45%,#000 100%);mask-image:linear-gradient(115deg,transparent 45%,#000 100%);opacity:.6}
+.hero-in{position:relative;z-index:2}
+.tag{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:5px 14px;font-weight:600;font-size:14px;letter-spacing:.14em;margin-bottom:26px}
+#hero h1{font-size:clamp(64px,17vw,210px);line-height:.85;transform:skewY(-3deg);transform-origin:left}
+#hero h1 span{display:block}
+#hero h1 .o{color:transparent;-webkit-text-stroke:2px var(--ink)}
+#hero h1 .r{color:var(--red);text-shadow:0 0 40px rgba(237,29,36,.5)}
+.sub{margin:34px 0 28px;max-width:46ch;font-size:19px;color:#d6d3c9}
+.cd{display:flex;gap:12px;margin:0 0 34px}
+.cd div{background:#ffffff0d;border:1px solid var(--line);padding:10px 0;min-width:74px;text-align:center;backdrop-filter:blur(4px)}
+.cd b{font:400 34px Anton,sans-serif;display:block;line-height:1.1}
+.cd small{color:var(--mute);font-size:13px}
+.ctas{display:flex;gap:14px;flex-wrap:wrap}
+.hl{animation:in 1s cubic-bezier(.2,.8,.2,1) both}
+.hl:nth-child(2){animation-delay:.12s}.hl:nth-child(3){animation-delay:.24s}
+@keyframes in{from{opacity:0;transform:translateX(-60px) skewX(-8deg)}}
+
+/* marquee */
+.mq{background:var(--red);color:#fff;overflow:hidden;white-space:nowrap;transform:rotate(-1.2deg);margin:-20px -10px 0;position:relative;z-index:3}
+.mq div{display:inline-block;padding:12px 0;font:400 26px Anton,sans-serif;letter-spacing:.08em;animation:mq 26s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* stats / highlights */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);padding:30px 26px;transition:transform .15s ease-out,border-color .3s;transform-style:preserve-3d;position:relative}
+.card:hover{border-color:var(--acc)}
+.card h3{font-size:30px;margin:12px 0 10px}
+.card p{margin:0;color:var(--mute);font-size:16px}
+.card .ic{font-size:34px}
+.card::after{content:"";position:absolute;left:0;bottom:0;height:4px;width:0;background:var(--gold);transition:width .4s}
+.card:hover::after{width:100%}
+
+/* hero picker */
+#heroes{background:linear-gradient(#07080d,var(--panel) 30%,var(--panel) 70%,#07080d)}
+.pick{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:stretch}
+.tabs{display:flex;flex-direction:column;gap:10px}
+.tab{background:none;color:var(--ink);text-align:left;font:400 26px Anton,sans-serif;letter-spacing:.03em;padding:16px 18px;border:1px solid var(--line);cursor:pointer;text-transform:uppercase;transition:all .25s}
+.tab small{display:block;font:500 14px Barlow,sans-serif;color:var(--mute);text-transform:none;letter-spacing:0}
+.tab[aria-selected=true]{background:var(--acc);border-color:var(--acc);color:#fff;transform:translateX(10px)}
+.tab[aria-selected=true] small{color:#ffffffcc}
+.stage{border:1px solid var(--acc);padding:38px;position:relative;overflow:hidden;min-height:340px;background:radial-gradient(circle at 90% 10%,color-mix(in srgb,var(--acc) 35%,transparent),transparent 55%)}
+.stage .big{position:absolute;right:-10px;bottom:-30px;font:400 190px/1 Anton,sans-serif;color:#ffffff08;pointer-events:none;text-transform:uppercase}
+.stage h3{font-size:clamp(40px,6vw,64px);color:var(--acc);filter:brightness(1.3)}
+.stage ul{padding:0;list-style:none;margin:18px 0 28px;max-width:52ch}
+.stage li{padding:10px 0;border-bottom:1px solid var(--line)}
+.stage.swap{animation:sw .5s both}
+@keyframes sw{from{opacity:0;clip-path:inset(0 100% 0 0)}}
+
+/* timeline */
+.tl{border-left:3px solid var(--red);margin-left:8px}
+.tl div{padding:0 0 34px 28px;position:relative}
+.tl div::before{content:"";position:absolute;left:-11px;top:6px;width:19px;height:19px;background:var(--bg);border:3px solid var(--gold);transform:rotate(45deg)}
+.tl time{font:400 24px Anton,sans-serif;color:var(--gold)}
+.tl h3{font-size:28px;margin:2px 0 4px}
+.tl p{margin:0;color:var(--mute)}
+
+/* register */
+#register{background:var(--red);color:#fff;overflow:hidden}
+#register .dots{background-image:radial-gradient(rgba(0,0,0,.28) 1.5px,transparent 1.7px);-webkit-mask-image:none;mask-image:none;opacity:1}
+.reg{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.reg .lead{color:#ffe1e2}
+form{background:#07080d;padding:32px;display:grid;gap:16px;color:var(--ink);box-shadow:12px 12px 0 var(--gold)}
+label{font-weight:600;font-size:15px;display:grid;gap:6px}
+input,select{font:inherit;background:#161824;color:var(--ink);border:1px solid var(--line);padding:13px 14px;width:100%;border-radius:0}
+input:focus,select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px #f5c51844}
+form .btn{background:var(--gold);color:#111;width:100%;clip-path:none;font-size:18px}
+#msg{min-height:1.4em;font-weight:600;color:var(--gold);margin:0}
+footer{padding:36px 0;color:var(--mute);font-size:15px;text-align:center;border-top:1px solid var(--line)}
+
+.rv{opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.2,.8,.2,1)}
+.rv.on{opacity:1;transform:none}
+@media(max-width:820px){
+ section{padding:70px 0}
+ .pick,.reg{grid-template-columns:1fr}
+ .tabs{flex-direction:row;overflow-x:auto;padding-bottom:6px}
+ .tab{flex:0 0 auto;font-size:21px}.tab small{display:none}
+ .tab[aria-selected=true]{transform:none}
+ .stage{padding:26px;min-height:0}.stage .big{font-size:120px}
+ .cd div{min-width:64px}
+ nav a.btn{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav><b>GFG<i>×</i>BU</b><a class="btn" href="#register">Register</a></nav>
+
+<header id="hero">
+  <canvas id="fx" aria-hidden="true"></canvas><div class="dots"></div>
+  <div class="wrap hero-in">
+    <span class="tag hl">GEEKSFORGEEKS STUDENT CHAPTER · BENNETT UNIVERSITY</span>
+    <h1><span class="hl">Avengers:</span><span class="o hl">Code</span><span class="r hl">Assemble</span></h1>
+    <p class="sub">A tech fest of workshops, a quiz and a live build-off. Earth's mightiest coders, one campus, one weekend.</p>
+    <div class="cd" id="cd" aria-label="Countdown to event"><div><b>00</b><small>days</small></div><div><b>00</b><small>hours</small></div><div><b>00</b><small>mins</small></div><div><b>00</b><small>secs</small></div></div>
+    <div class="ctas"><a class="btn" href="#register">Join the initiative</a><a class="btn ghost" href="#heroes">Pick your hero</a></div>
+  </div>
+</header>
+
+<div class="mq" aria-hidden="true"><div>WORKSHOPS ✦ QUIZ ✦ BUILD-OFF ✦ PRIZES ✦ MENTORS ✦ WORKSHOPS ✦ QUIZ ✦ BUILD-OFF ✦ PRIZES ✦ MENTORS ✦ WORKSHOPS ✦ QUIZ ✦ BUILD-OFF ✦ PRIZES ✦ MENTORS ✦ WORKSHOPS ✦ QUIZ ✦ BUILD-OFF ✦ PRIZES ✦ MENTORS ✦&nbsp;</div></div>
+
+<section id="about"><div class="wrap">
+  <h2 class="rv">The mission</h2>
+  <p class="lead rv">Two days of workshops, contests and showdowns. Pick your hero, learn something new and prove it on stage.</p>
+  <div class="grid">
+    <div class="card rv"><span class="ic">🎓</span><h3>Workshops</h3><p>Hands-on sessions on web development, Git and AI, led by chapter seniors and mentors.</p></div>
+    <div class="card rv"><span class="ic">🧠</span><h3>Infinity Quiz</h3><p>Six rounds of tech and pop-culture trivia. Every correct answer earns a stone.</p></div>
+    <div class="card rv"><span class="ic">🛠️</span><h3>Live build-off</h3><p>Ship a landing page in 90 minutes while the whole hall watches your screen.</p></div>
+    <div class="card rv"><span class="ic">🏆</span><h3>Prizes and swag</h3><p>Cash prizes, goodies, certificates and a fast track to the chapter's core team.</p></div>
+  </div>
+</div></section>
+
+<section id="heroes"><div class="wrap">
+  <h2 class="rv">Choose your hero</h2>
+  <p class="lead rv">Each path is a track with its own challenge. Pick one and the page changes with you.</p>
+  <div class="pick">
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="stage" id="stage" role="tabpanel"></div>
+  </div>
+</div></section>
+
+<section id="schedule"><div class="wrap">
+  <h2 class="rv">Mission timeline</h2>
+  <p class="lead rv">Dates and times are placeholders.</p>
+  <div class="tl">
+    <div class="rv"><time>Day 1 · 09:00</time><h3>Assemble</h3><p>Check-in, team formation and the opening keynote.</p></div>
+    <div class="rv"><time>Day 1 · 11:00</time><h3>Workshop block</h3><p>Hands-on sessions on web, Git and AI run in parallel.</p></div>
+    <div class="rv"><time>Day 1 · 20:00</time><h3>Infinity Quiz</h3><p>Trivia rounds while your builds compile.</p></div>
+    <div class="rv"><time>Day 2 · 09:00</time><h3>Live build-off</h3><p>90 minutes, one screen, the whole hall watching.</p></div>
+    <div class="rv"><time>Day 2 · 13:00</time><h3>Final showdown</h3><p>Demos, judging and the winners' ceremony.</p></div>
+  </div>
+</div></section>
+
+<section id="register"><div class="dots"></div><div class="wrap reg">
+  <div><h2 class="rv">Your country needs you</h2><p class="lead rv">Seats are limited to 200 heroes. Register now and lock in your spot. Open to all Bennett University students.</p></div>
+  <form id="f" class="rv">
+    <label>Full name<input required name="n" autocomplete="name" placeholder="Peter Parker"></label>
+    <label>University email<input required type="email" name="e" autocomplete="email" placeholder="you@bennett.edu.in"></label>
+    <label>Your hero track<select id="track" name="t"></select></label>
+    <button class="btn" type="submit">Register now</button>
+    <p id="msg" role="status" aria-live="polite"></p>
+  </form>
+</div></section>
+
+<footer>Made by the GeeksForGeeks Student Chapter, Bennett University. Fan-made concept; Marvel and its characters belong to Marvel Entertainment.</footer>
+
+<script>
+// hero data
+const H=[
+ {n:"Iron Man",s:"Build track",c:"#ed1d24",t:"Tony Stark",d:["Build a full-stack project with a working demo","Judged on innovation, polish and real-world use","Hardware and API ideas welcome"]},
+ {n:"Captain America",s:"Open source track",c:"#3b82f6",t:"Steve Rogers",d:["Contribute to real open-source projects during the event","Mentors review your pull requests live","Best merged contribution wins"]},
+ {n:"Black Widow",s:"Cyber track",c:"#c026d3",t:"Natasha Romanoff",d:["Capture-the-flag challenges from beginner to hard","Web, crypto and reverse-engineering puzzles","Solo or duo, points-based leaderboard"]},
+ {n:"Doctor Strange",s:"AI track",c:"#f59e0b",t:"Stephen Strange",d:["Design a product powered by machine learning","Model quality and product thinking both count","Cloud credits provided for every participant"]}
+];
+const tabs=document.getElementById('tabs'),stage=document.getElementById('stage'),sel=document.getElementById('track');
+H.forEach((h,i)=>{
+  const b=document.createElement('button');b.className='tab';b.role='tab';b.innerHTML=h.n+'<small>'+h.s+'</small>';
+  b.onclick=()=>pick(i);tabs.appendChild(b);
+  sel.add(new Option(h.n+' · '+h.s,h.n));
+});
+function pick(i){
+  const h=H[i];
+  document.documentElement.style.setProperty('--acc',h.c);
+  [...tabs.children].forEach((b,j)=>b.setAttribute('aria-selected',j===i));
+  stage.classList.remove('swap');void stage.offsetWidth;stage.classList.add('swap');
+  stage.innerHTML='<div class="big">'+h.n.split(' ').pop()+'</div><h3>'+h.n+'</h3><p style="color:var(--mute);margin:8px 0 0">'+h.s+' · '+h.t+'</p><ul>'+h.d.map(x=>'<li>'+x+'</li>').join('')+'</ul><a class="btn" href="#register">Enter as '+h.n+'</a>';
+  stage.querySelector('a').onclick=()=>{sel.selectedIndex=i};
+  sel.selectedIndex=i;
+}
+pick(0);
+sel.onchange=()=>pick(sel.selectedIndex);
+
+// countdown
+const T=new Date('2026-10-11T09:00:00+05:30').getTime(),cd=[...document.querySelectorAll('#cd b')];
+function tick(){let d=Math.max(0,T-Date.now());const v=[864e5,36e5,6e4,1e3].map(u=>{const x=Math.floor(d/u);d-=x*u;return String(x).padStart(2,'0')});cd.forEach((e,i)=>e.textContent=v[i])}
+tick();setInterval(tick,1000);
+
+// scroll reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(e=>io.observe(e));
+
+// card tilt
+document.querySelectorAll('.card').forEach(c=>{
+  c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(700px) rotateY('+x*10+'deg) rotateX('+-y*10+'deg)'});
+  c.addEventListener('pointerleave',()=>c.style.transform='');
+});
+
+// hero energy field: sparks drawn toward the pointer
+const cv=document.getElementById('fx'),g=cv.getContext('2d');let W,Hh,P=[],m={x:.7,y:.4};
+function rs(){W=cv.width=cv.offsetWidth;Hh=cv.height=cv.offsetHeight}
+rs();addEventListener('resize',rs);
+const N=innerWidth<700?45:100;
+for(let i=0;i<N;i++)P.push({x:Math.random(),y:Math.random(),vx:(Math.random()-.5)*.0004,vy:(Math.random()-.5)*.0004,r:Math.random()*2+.6,g:Math.random()<.25});
+document.getElementById('hero').addEventListener('pointermove',e=>{const r=cv.getBoundingClientRect();m.x=(e.clientX-r.left)/r.width;m.y=(e.clientY-r.top)/r.height});
+function draw(){
+  g.clearRect(0,0,W,Hh);
+  P.forEach(p=>{
+    const dx=m.x-p.x,dy=m.y-p.y,d=Math.hypot(dx,dy)||1;
+    p.vx+=dx/d*.000012;p.vy+=dy/d*.000012;p.vx*=.995;p.vy*=.995;
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>1)p.vx*=-1;if(p.y<0||p.y>1)p.vy*=-1;
+    g.fillStyle=p.g?'#f5c518':'#ed1d24';g.globalAlpha=.8;
+    g.beginPath();g.arc(p.x*W,p.y*Hh,p.r,0,7);g.fill();
+  });
+  g.globalAlpha=.16;g.strokeStyle='#ed1d24';
+  for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){
+    const a=P[i],b=P[j],d=Math.hypot((a.x-b.x)*W,(a.y-b.y)*Hh);
+    if(d<110){g.beginPath();g.moveTo(a.x*W,a.y*Hh);g.lineTo(b.x*W,b.y*Hh);g.stroke()}
+  }
+  requestAnimationFrame(draw);
+}
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)draw();
+
+// form
+document.getElementById('f').addEventListener('submit',e=>{
+  e.preventDefault();
+  const n=e.target.n.value.split(' ')[0];
+  document.getElementById('msg').textContent='Welcome to the team, '+n+'. Check your inbox for your mission briefing.';
+  e.target.reset();sel.selectedIndex=0;
+});
+</script>
+</body>
+</html>
